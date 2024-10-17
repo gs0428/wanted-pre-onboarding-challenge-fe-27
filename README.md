@@ -9,6 +9,7 @@
 - @tanstack/react-query(v5)
 - axios
 - tailwindcss
+- shadcn/ui
 
 ## 구현 과제
 
