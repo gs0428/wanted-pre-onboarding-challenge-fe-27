@@ -2,17 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  font-size: 62.5%;
-}
-
 body {
   margin: 0 auto;
   padding: 0;
 
   border: 1px solid black;
-  font-size: 1.6rem;
-  max-width: 48rem;
+  max-width: 480px;
   height: 100vh;
 }
 
