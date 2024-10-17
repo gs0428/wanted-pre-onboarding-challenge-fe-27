@@ -21,14 +21,9 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Alias */
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@api/*": ["api/*"],
-      "@assets/*": ["assets/*"],
-      "@components/*": ["components/*"],
-      "@pages/*": ["pages/*"],
-      "@types/*": ["types/*"],
-      "@utils/*": ["utils/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]
