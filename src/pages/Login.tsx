@@ -46,7 +46,7 @@ const Login = () => {
   return (
     <Form {...form}>
       <section className="flex flex-col gap-16 h-full py-20 px-4">
-        <h1 className="self-center text-4xl">PreOnboarding Todo</h1>
+        <h1 className="self-center text-4xl font-bold">PreOnboarding Todo</h1>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-10"

@@ -51,6 +51,10 @@ export default {
           5: "hsl(var(--chart-5))",
         },
       },
+      flex: {
+        2: "2",
+        3: "3",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

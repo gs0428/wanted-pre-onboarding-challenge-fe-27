@@ -68,7 +68,7 @@ const Signup = () => {
         <ArrowLeft /> 뒤로가기
       </button>
       <section className="flex flex-col gap-16 h-full py-20 px-4">
-        <h1 className="self-center text-4xl">회원가입</h1>
+        <h1 className="self-center text-4xl font-bold">회원가입</h1>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
           <div className="space-y-4">
             <FormField
