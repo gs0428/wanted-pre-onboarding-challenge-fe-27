@@ -1,3 +1,4 @@
+import { errorStatus } from "@/api/status";
 import { createUser, loginUser } from "@/api/user";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -14,10 +15,7 @@ export const useCreateUser = () => {
       navigate(-1);
     },
     onError: (error: AxiosError) => {
-      if (error.response?.status === 409) {
-        return alert("이미 존재하는 이메일입니다.");
-      }
-      alert("알 수 없는 오류가 발생했습니다.");
+      errorStatus(error);
     },
   });
 };
@@ -33,10 +31,7 @@ export const useLoginUser = () => {
       navigate("/todos");
     },
     onError: (error: AxiosError) => {
-      if (error.response?.status === 400) {
-        return alert("로그인에 실패했습니다");
-      }
-      alert("알 수 없는 오류가 발생했습니다.");
+      errorStatus(error);
     },
   });
 };
