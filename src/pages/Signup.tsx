@@ -13,8 +13,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import ArrowLeft from "@/assets/icons/arrow-left.svg";
+import { useCreateUser } from "@/lib/mutation/user";
 
 const Signup = () => {
+  const { mutate } = useCreateUser();
   const formSchema = z
     .object({
       email: z.string().email({
@@ -40,11 +42,17 @@ const Signup = () => {
       passwordConfirm: "",
     },
   });
+  const disabled =
+    form.formState.isSubmitting ||
+    form.getValues().email.trim() === "" ||
+    form.getValues().password.trim() === "" ||
+    form.getValues().passwordConfirm.trim() === "";
 
   const navigate = useNavigate();
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { passwordConfirm, ...sendData } = values;
+    mutate(sendData);
   };
 
   const onClickBack = () => {
@@ -117,7 +125,9 @@ const Signup = () => {
               )}
             />
           </div>
-          <Button className="w-full">회원가입</Button>
+          <Button className="w-full" disabled={disabled}>
+            회원가입
+          </Button>
         </form>
       </section>
     </Form>
