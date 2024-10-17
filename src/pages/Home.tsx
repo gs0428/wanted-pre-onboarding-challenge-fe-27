@@ -24,7 +24,7 @@ const Home = () => {
     title: "Todo를 선택해주세요.",
     content: "Todo를 선택해주세요.",
   };
-  const s = edit.editId === todoStore;
+  const isEdit = edit.editId === todoStore;
 
   const onClickDetail = (id: string) => {
     setTodoStore(id);
@@ -94,7 +94,7 @@ const Home = () => {
         <hr className="mx-[-16px] border-black my-4" />
         <div className="flex-2 space-y-4">
           <h2 className="text-xl font-semibold">
-            상세 - {s ? edit.title : detail.title}
+            상세 - {isEdit ? edit.title : detail.title}
           </h2>
           <h3 className="text-lg">{detail.content || "추가 내용이 없어요."}</h3>
         </div>
