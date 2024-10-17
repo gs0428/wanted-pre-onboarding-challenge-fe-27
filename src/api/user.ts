@@ -6,3 +6,7 @@ import { UserDTO } from "@/models/user";
 export const createUser = async (data: User): Promise<ResponseDTO<UserDTO>> => {
   return await http.post("/users/create", data);
 };
+
+export const loginUser = async (data: User): Promise<ResponseDTO<UserDTO>> => {
+  return await http.post("/users/login", data);
+};
