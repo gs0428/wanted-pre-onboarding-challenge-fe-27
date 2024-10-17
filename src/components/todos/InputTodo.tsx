@@ -14,9 +14,9 @@ import {
 import { useCreateTodo } from "@/lib/mutation/todos";
 
 const InputTodo = () => {
-  const { mutate, isSuccess } = useCreateTodo();
+  const { mutate } = useCreateTodo();
   const formSchema = z.object({
-    title: z.string().min(0, {
+    title: z.string().min(1, {
       message: "1글자 이상 입력해주세요.",
     }),
     content: z.string(),
@@ -31,11 +31,13 @@ const InputTodo = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate(values);
-    if (isSuccess) {
-      form.resetField("title");
-      form.resetField("content");
-    }
+    mutate(values, {
+      onSuccess: () => {
+        form.resetField("title");
+        form.resetField("content");
+        form.setFocus("title");
+      },
+    });
   };
 
   return (

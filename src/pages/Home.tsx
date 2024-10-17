@@ -1,23 +1,57 @@
-import Edit from "@/assets/icons/edit.svg";
-import Delete from "@/assets/icons/delete.svg";
 import InputTodo from "@/components/todos/InputTodo";
 import { useGetTodos } from "@/lib/query/todos";
 import { useState } from "react";
 import Loading from "@/components/common/loading";
-import { useDeleteTodo } from "@/lib/mutation/todos";
+import { useDeleteTodo, useUpdateTodo } from "@/lib/mutation/todos";
+import Todo from "@/components/todos/Todo";
+import { TodoDTO } from "@/models/todos";
+import { useTodoStore } from "@/lib/zustand/todos";
 
 const Home = () => {
-  const { data, isLoading } = useGetTodos();
-  const { mutate } = useDeleteTodo();
   const [edit, setEdit] = useState({
     editId: "",
-    value: "",
+    title: "",
+    content: "",
   });
 
+  const { data, isLoading } = useGetTodos();
+  const { mutate: deleteMutate } = useDeleteTodo();
+  const { mutate: updateMutate } = useUpdateTodo();
+
+  const { todo: todoStore, setTodo: setTodoStore } = useTodoStore();
+
+  const detail = data?.data.data.find((todo) => todo.id === todoStore) || {
+    title: "Todo를 선택해주세요.",
+    content: "Todo를 선택해주세요.",
+  };
+
+  const onClickDetail = (id: string) => {
+    setTodoStore(id);
+  };
+
   const onEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEdit((prev) => ({
+      ...prev,
+      title: e.target.value,
+    }));
+  };
+
+  const handleEdit = (
+    todo: TodoDTO,
+    e?: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e?.stopPropagation();
+    if (todo.id === edit.editId) {
+      updateMutate(todo);
+      return setEdit({
+        editId: "",
+        title: "",
+        content: "",
+      });
+    }
     setEdit({
-      editId: edit.editId,
-      value: e.target.value,
+      ...todo,
+      editId: todo.id,
     });
   };
 
@@ -31,7 +65,7 @@ const Home = () => {
         <InputTodo />
         <hr className="mx-[-16px] border-black my-4" />
         <h2 className="text-xl font-semibold">목록</h2>
-        <div className="flex flex-col py-2 gap-4 flex-3">
+        <div className="flex flex-col py-2 gap-4 flex-3 overflow-y-auto">
           <Loading isLoading={isLoading}>
             {data?.data.data.length === 0 ? (
               <h3 className="h-full flex justify-center items-center text-lg text-gray-400">
@@ -39,29 +73,24 @@ const Home = () => {
               </h3>
             ) : (
               data?.data.data.map((todo) => (
-                <div className="flex justify-between" key={todo.id}>
-                  <input
-                    className="font-medium"
-                    value={todo.title}
-                    onChange={onEdit}
-                    readOnly={todo.id !== edit.editId}
-                  />
-                  <div className="flex gap-2">
-                    <button>
-                      <Edit />
-                    </button>
-                    <button onClick={() => mutate(todo.id)}>
-                      <Delete />
-                    </button>
-                  </div>
-                </div>
+                <Todo
+                  {...todo}
+                  key={todo.id}
+                  readOnly={todo.id !== edit.editId}
+                  value={edit.title}
+                  onEdit={onEdit}
+                  onClickDelete={deleteMutate}
+                  onClickDetail={onClickDetail}
+                  handleEdit={handleEdit}
+                />
               ))
             )}
           </Loading>
         </div>
         <hr className="mx-[-16px] border-black my-4" />
-        <div className="flex-2">
-          <h2 className="text-xl font-semibold">상세</h2>
+        <div className="flex-2 space-y-4">
+          <h2 className="text-xl font-semibold">상세 - {detail.title}</h2>
+          <h3 className="text-lg">{detail.content || "추가 내용이 없어요."}</h3>
         </div>
       </div>
     </section>
