@@ -11,11 +11,11 @@ const Layout = () => {
   useEffect(() => {
     if (isLogin && pathname.startsWith("/auth")) {
       navigate("/todos");
-    } else if (!isLogin) {
+    } else if (!isLogin && !pathname.startsWith("/auth")) {
       navigate("/auth");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogin, pathname]);
+  }, [isLogin, pathname, navigate]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />

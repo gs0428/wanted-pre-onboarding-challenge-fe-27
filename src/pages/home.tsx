@@ -1,9 +1,9 @@
-import InputTodo from "@/components/todos/InputTodo";
+import InputTodo from "@/components/todos/input-todo";
 import { useGetTodos } from "@/lib/query/todos";
 import { useState } from "react";
 import Loading from "@/components/common/loading";
 import { useDeleteTodo, useUpdateTodo } from "@/lib/mutation/todos";
-import Todo from "@/components/todos/Todo";
+import Todo from "@/components/todos/todo";
 import { TodoDTO } from "@/models/todos";
 import { useTodoStore } from "@/lib/zustand/todos";
 
@@ -27,6 +27,7 @@ const Home = () => {
   const isEdit = edit.editId === todoStore;
 
   const onClickDetail = (id: string) => {
+    if (id === todoStore) return;
     setTodoStore(id);
   };
 
