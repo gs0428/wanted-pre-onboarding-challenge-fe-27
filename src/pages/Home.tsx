@@ -36,7 +36,7 @@ const Home = () => {
               </h3>
             ) : (
               data?.data.data.map((todo) => (
-                <div className="flex justify-between">
+                <div className="flex justify-between" key={todo.id}>
                   <input
                     className="font-medium"
                     value={todo.title}

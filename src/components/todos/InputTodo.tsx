@@ -11,8 +11,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useCreateTodo } from "@/lib/mutation/todos";
 
 const InputTodo = () => {
+  const { mutate, isSuccess } = useCreateTodo();
   const formSchema = z.object({
     title: z.string().min(0, {
       message: "1글자 이상 입력해주세요.",
@@ -29,7 +31,11 @@ const InputTodo = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    mutate(values);
+    if (isSuccess) {
+      form.resetField("title");
+      form.resetField("content");
+    }
   };
 
   return (
