@@ -24,6 +24,7 @@ const Home = () => {
     title: "Todo를 선택해주세요.",
     content: "Todo를 선택해주세요.",
   };
+  const s = edit.editId === todoStore;
 
   const onClickDetail = (id: string) => {
     setTodoStore(id);
@@ -38,11 +39,14 @@ const Home = () => {
 
   const handleEdit = (
     todo: TodoDTO,
-    e?: React.MouseEvent<HTMLButtonElement>,
+    e?: React.MouseEvent<HTMLButtonElement>
   ) => {
     e?.stopPropagation();
     if (todo.id === edit.editId) {
-      updateMutate(todo);
+      if (edit.title.trim() === "") {
+        return alert("1글자 이상 입력해주세요.");
+      }
+      updateMutate({ id: todo.id, title: edit.title, content: edit.content });
       return setEdit({
         editId: "",
         title: "",
@@ -89,7 +93,9 @@ const Home = () => {
         </div>
         <hr className="mx-[-16px] border-black my-4" />
         <div className="flex-2 space-y-4">
-          <h2 className="text-xl font-semibold">상세 - {detail.title}</h2>
+          <h2 className="text-xl font-semibold">
+            상세 - {s ? edit.title : detail.title}
+          </h2>
           <h3 className="text-lg">{detail.content || "추가 내용이 없어요."}</h3>
         </div>
       </div>
