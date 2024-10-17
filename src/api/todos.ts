@@ -12,3 +12,7 @@ export const getTodos = async (): Promise<
 export const createTodo = async (data: Todo): Promise<ResponseDTO<TodoDTO>> => {
   return await http.post("/todos", data);
 };
+
+export const removeTodo = async (id: string) => {
+  return await http.delete(`/todos/${id}`);
+};

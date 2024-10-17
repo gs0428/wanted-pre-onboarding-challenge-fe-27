@@ -4,9 +4,11 @@ import InputTodo from "@/components/todos/InputTodo";
 import { useGetTodos } from "@/lib/query/todos";
 import { useState } from "react";
 import Loading from "@/components/common/loading";
+import { useDeleteTodo } from "@/lib/mutation/todos";
 
 const Home = () => {
   const { data, isLoading } = useGetTodos();
+  const { mutate } = useDeleteTodo();
   const [edit, setEdit] = useState({
     editId: "",
     value: "",
@@ -18,6 +20,7 @@ const Home = () => {
       value: e.target.value,
     });
   };
+
   return (
     <section className="h-full">
       <h1 className="sticky top-0 border-b border-black p-4 text-2xl font-bold bg-white">
@@ -47,7 +50,7 @@ const Home = () => {
                     <button>
                       <Edit />
                     </button>
-                    <button>
+                    <button onClick={() => mutate(todo.id)}>
                       <Delete />
                     </button>
                   </div>
