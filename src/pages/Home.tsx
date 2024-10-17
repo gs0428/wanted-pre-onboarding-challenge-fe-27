@@ -59,7 +59,7 @@ const Home = () => {
                   <FormControl>
                     <Input
                       id="email"
-                      placeholder="이메일을 입력하세요."
+                      placeholder="이메일을 입력해주세요."
                       {...field}
                     />
                   </FormControl>
@@ -77,7 +77,7 @@ const Home = () => {
                     <Input
                       id="password"
                       type="password"
-                      placeholder="비밀번호를 입력하세요."
+                      placeholder="비밀번호를 입력해주세요."
                       {...field}
                     />
                   </FormControl>
