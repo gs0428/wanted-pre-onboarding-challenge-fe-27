@@ -1,12 +1,13 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Layout from "@components/layout";
+import Layout from "./components/layout";
 
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/auth" />} />
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Home />} />
+        <Route path="auth" element={<Home />} />
       </Route>
     </Routes>
   );
